@@ -114,12 +114,13 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
     this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? 
     Cell().START: Cell().END;
 
-    for(Cell &cell : this->selected_cells){
-        if(this->grid_vector[cell.row][cell.column].type == this->grid_vector[mouse_row][mouse_column].type){
-            this->grid_vector[cell.row][cell.column].type = Cell().EMPTY;
+    for(int i = this->selected_cells.size()-1; i >= 0; i--){
+        if(this->grid_vector[this->selected_cells[i].row][this->selected_cells[i].column].type == this->grid_vector[mouse_row][mouse_column].type){
+            this->grid_vector[this->selected_cells[i].row][this->selected_cells[i].column].type = Cell().EMPTY;
+            this->selected_cells.erase(this->selected_cells.begin() + i);
         }
     }
-    
+
     this->prev_row = mouse_row;
     this->prev_column = mouse_column;
     this->selected_cells.push_back(this->grid_vector[this->prev_row][this->prev_column]);
