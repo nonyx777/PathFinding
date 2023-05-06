@@ -33,9 +33,16 @@ class Engine{
         //cell type represented by an integer
         int cell_type;
 
+        //to track the prev cell...to revert it's color
+        int prev_row;
+        int prev_column;
+
         //text related variables(what kind of particle)
         sf::Font font;
         sf::Text text;
+
+        //selected cells container
+        std::vector<Cell> selected_cells;
 
     public:
         //constructor and destructor

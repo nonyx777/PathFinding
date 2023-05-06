@@ -111,7 +111,18 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
     int mouse_row = floor(mouse_position.y/this->size);
     int mouse_column = floor(mouse_position.x/this->size);
 
-    this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? Cell().START: Cell().END;
+    this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? 
+    Cell().START: Cell().END;
+
+    for(Cell &cell : this->selected_cells){
+        if(this->grid_vector[cell.row][cell.column].type == this->grid_vector[mouse_row][mouse_column].type){
+            this->grid_vector[cell.row][cell.column].type = Cell().EMPTY;
+        }
+    }
+    
+    this->prev_row = mouse_row;
+    this->prev_column = mouse_column;
+    this->selected_cells.push_back(this->grid_vector[this->prev_row][this->prev_column]);
 } 
 
 void Engine::setText(std::string particle_text){

@@ -34,5 +34,8 @@ void Cell::setColor(){
         case Type::END:
             this->cell_property.setFillColor(end_color);
             break;
+        case Type::EMPTY:
+            this->cell_property.setFillColor(empty_color);
+            break;
     }
 }
