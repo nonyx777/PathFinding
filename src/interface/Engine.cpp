@@ -45,10 +45,14 @@ void Engine::pollEvent(){
             case sf::Event::Closed:
                 this->window->close();
                 break;
+            case sf::Event::MouseButtonPressed:
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    this->pointLocation(this->mouse_position_view);
+                break;
             case sf::Event::MouseWheelScrolled:
                 if(this->event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel){
                     if(this->event.mouseWheelScroll.delta > 0)
-                        if(this->cell_type < 3)
+                        if(this->cell_type < 1)
                             this->cell_type++;
                         else
                             this->cell_type = 0;
@@ -56,7 +60,7 @@ void Engine::pollEvent(){
                         if(this->cell_type > 0)
                             this->cell_type--;
                         else
-                            this->cell_type = 3;
+                            this->cell_type = 1;
                 }
                 break;
         }
@@ -65,15 +69,28 @@ void Engine::pollEvent(){
 void Engine::update(){
     this->pollEvent();
     this->mouse_position = sf::Mouse::getPosition(*this->window);
-    this->mouse_position_view = this->window->mapPixelToCoords(this->mouse_position);    
+    this->mouse_position_view = this->window->mapPixelToCoords(this->mouse_position);
+
+    std::string cell_type_string = this->cell_type == 0 ? "Start Point" : "End Point";
+    this->setText(cell_type_string);
+
+    for(int i = 0; i < this->grid_vector.size(); i++){
+        for(int j = 0; j < this->grid_vector[i].size(); j++){
+            this->grid_vector[i][j].update();
+        }
+    }
 }
 void Engine::render(){
     this->window->clear(sf::Color::Black);
+
     for(int i = 0; i < this->grid_vector.size(); i++){
         for(int j = 0; j < this->grid_vector[i].size(); j++){
             grid_vector[i][j].render(this->window);
         }
     }
+
+    this->window->draw(this->text);
+
     this->window->display();
 }
 
@@ -91,8 +108,11 @@ void Engine::configureGridLayout(int column, int row){
     }
 }
 void Engine::pointLocation(sf::Vector2f mouse_position){
-    //..
-}
+    int mouse_row = floor(mouse_position.y/this->size);
+    int mouse_column = floor(mouse_position.x/this->size);
+
+    this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? Cell().START: Cell().END;
+} 
 
 void Engine::setText(std::string particle_text){
     this->text.setFont(this->font);

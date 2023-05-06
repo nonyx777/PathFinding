@@ -26,4 +26,13 @@ void Cell::render(sf::RenderTarget* target){
 }
 
 //defining custom functions
-void Cell::setColor(){}
+void Cell::setColor(){
+    switch(this->type){
+        case Type::START:
+            this->cell_property.setFillColor(start_color);
+            break;
+        case Type::END:
+            this->cell_property.setFillColor(end_color);
+            break;
+    }
+}
