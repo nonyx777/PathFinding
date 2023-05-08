@@ -114,6 +114,7 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
     this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? 
     Cell().START: Cell().END;
 
+    //revert cell state and remove cell from previously selected container
     for(int i = this->selected_cells.size()-1; i >= 0; i--){
         if(this->grid_vector[this->selected_cells[i].row][this->selected_cells[i].column].type == this->grid_vector[mouse_row][mouse_column].type){
             this->grid_vector[this->selected_cells[i].row][this->selected_cells[i].column].type = Cell().EMPTY;
@@ -121,6 +122,7 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
         }
     }
 
+    //store selected cell
     this->prev_row = mouse_row;
     this->prev_column = mouse_column;
     this->selected_cells.push_back(this->grid_vector[this->prev_row][this->prev_column]);

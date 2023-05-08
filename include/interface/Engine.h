@@ -37,7 +37,7 @@ class Engine{
         int prev_row;
         int prev_column;
 
-        //text related variables(what kind of particle)
+        //text related variables
         sf::Font font;
         sf::Text text;
 
