@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 const sf::Color start_color = sf::Color::Green;
 const sf::Color end_color = sf::Color::Red;
@@ -22,6 +23,7 @@ class Cell{
         int column, row;
         sf::Color state;
         Type type;
+        std::vector<Cell> neighbours;
     
     public:
         sf::Vector2f size;
