@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "../cell/Cell.hpp"
+#include "../dijkstra/Dijkstra.hpp"
 #include <math.h>
 
 using namespace std;
@@ -19,17 +20,18 @@ class Engine{
         sf::Event event;
 
         //instantiating objects
+        Dijkstra dijkstra;
 
         //mouse position
         sf::Vector2i mouse_position;
         sf::Vector2f mouse_position_view;
-
+        
+    private:
         //grid related variabless
         int size;
         int row;
         int column;
         std::vector<std::vector<Cell>> grid_vector;
-
         //cell type represented by an integer
         int cell_type;
 
