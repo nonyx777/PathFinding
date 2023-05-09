@@ -7,6 +7,7 @@
 const sf::Color start_color = sf::Color::Green;
 const sf::Color end_color = sf::Color::Red;
 const sf::Color empty_color = sf::Color::Transparent;
+const sf::Color visited_color = sf::Color::Yellow;
 
 class Cell{
     public:
@@ -15,7 +16,8 @@ class Cell{
         enum Type{
             START,
             END,
-            EMPTY
+            EMPTY,
+            VISITED
         };
     public:
         Cell();
