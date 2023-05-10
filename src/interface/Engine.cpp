@@ -10,6 +10,12 @@ void Engine::initVariables(){
     }catch(...){
         std::cout << "Couldn't load the font" << std::endl;
     }
+
+    //default values for start and end cell
+    this->startCell.column = -1;
+    this->startCell.row = -1;
+    this->endCell.column = -1;
+    this->endCell.row = -1;
 }
 void Engine::initWindow(){
     this->video_mode.width = 600;
@@ -22,8 +28,6 @@ void Engine::initWindow(){
     this->row = 20;
     //calling grid layout function
     this->configureGridLayout(this->column, this->row);
-    //assigning neighbours
-    this->dijkstra.setupNeighbours(grid_vector);
 }
 
 //defining constructor and destructor
@@ -76,6 +80,9 @@ void Engine::update(){
     std::string cell_type_string = this->cell_type == 0 ? "Start Point" : "End Point";
     this->setText(cell_type_string);
 
+    if((this->startCell.column != -1 && this->startCell.row != -1) && (this->endCell.column != -1 && this->endCell.row != -1))
+        this->dijkstra.findPath(startCell, endCell, this->grid_vector);
+
     for(int i = 0; i < this->grid_vector.size(); i++){
         for(int j = 0; j < this->grid_vector[i].size(); j++){
             this->grid_vector[i][j].update();
@@ -115,6 +122,11 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
 
     this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? 
     Cell().START: Cell().END;
+
+    if(this->cell_type == 0)
+        this->startCell = this->grid_vector[mouse_row][mouse_column];
+    else
+        this->endCell = this->grid_vector[mouse_row][mouse_column];
 
     //revert cell state and remove cell from previously selected container
     for(int i = this->selected_cells.size()-1; i >= 0; i--){

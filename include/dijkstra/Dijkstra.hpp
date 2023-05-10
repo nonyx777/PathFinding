@@ -1,11 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include "../cell/Cell.hpp"
 
 class Dijkstra{
+    private:
+        std::queue<Cell> queue;
     public:
         Dijkstra();
     public:
-        void setupNeighbours(std::vector<std::vector<Cell>>& grid_vector);
-        void findPath(Cell& cell);
+        void setupNeighbours(Cell& cell);
+        void findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>>& grid_vector);
 };
