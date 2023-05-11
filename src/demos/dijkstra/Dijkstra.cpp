@@ -33,12 +33,14 @@ void Dijkstra::findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>
 
         while(this->queue.size() != 0){
             cell = this->queue.front();
+            if((cell.column == endCell.column && cell.row == endCell.row))
+                std::cout << "Arrived at Destination" << std::endl;
             this->queue.pop();
 
             for(int i = cell.row-1; i <= cell.row+1; i++){
                 for(int j = cell.column-1; j <= cell.column+1; j++){
                     if((j > 0 && i > 0) && (j < 19 && i < 19)){
-                        if(grid_vector[i][j].visited == false && grid_vector[i][j].type != Cell().END){
+                        if(grid_vector[i][j].visited == false){
                             this->queue.push(grid_vector[i][j]);
                             grid_vector[i][j].visited = true;
                         }

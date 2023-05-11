@@ -12,7 +12,7 @@ const sf::Color visited_color = sf::Color::Yellow;
 class Cell{
     public:
         sf::RectangleShape cell_property;
-        bool visited;
+        bool visited = false;
     public:
         enum Type{
             START,
