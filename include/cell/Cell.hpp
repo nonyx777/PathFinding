@@ -13,6 +13,7 @@ class Cell{
     public:
         sf::RectangleShape cell_property;
         bool visited = false;
+        Cell* parent;
     public:
         enum Type{
             START,
