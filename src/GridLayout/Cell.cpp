@@ -37,8 +37,5 @@ void Cell::setColor(){
         case Type::EMPTY:
             this->cell_property.setFillColor(empty_color);
             break;
-        case Type::VISITED:
-            this->cell_property.setFillColor(visited_color);
-            break;
     }
 }

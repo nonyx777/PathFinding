@@ -29,7 +29,7 @@ void Dijkstra::setupNeighbours(Cell& cell){
 void Dijkstra::findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>>& grid_vector){
     if((cell.column > 0 && cell.row > 0) && (cell.column < 19 && cell.row < 19)){
         this->queue.push(cell);
-        cell.type = Cell().VISITED;
+        cell.visited = true;
 
         while(this->queue.size() != 0){
             cell = this->queue.front();
@@ -38,9 +38,9 @@ void Dijkstra::findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>
             for(int i = cell.row-1; i <= cell.row+1; i++){
                 for(int j = cell.column-1; j <= cell.column+1; j++){
                     if((j > 0 && i > 0) && (j < 19 && i < 19)){
-                        if(grid_vector[i][j].type != Cell().VISITED && grid_vector[i][j].type != Cell().END){
+                        if(grid_vector[i][j].visited == false && grid_vector[i][j].type != Cell().END){
                             this->queue.push(grid_vector[i][j]);
-                            grid_vector[i][j].type = Cell().VISITED;
+                            grid_vector[i][j].visited = true;
                         }
                     }
                 }
