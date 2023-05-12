@@ -28,22 +28,22 @@ void Dijkstra::setupNeighbours(Cell& cell){
 
 void Dijkstra::findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>>& grid_vector){
     if((cell.column > 0 && cell.row > 0) && (cell.column < 19 && cell.row < 19)){
+        Cell start_cell = cell;
         this->queue.push(cell);
         cell.visited = true;
 
         while(this->queue.size() != 0){
             cell = this->queue.front();
-            if((cell.column == endCell.column && cell.row == endCell.row)){
+            if(cell.column == endCell.column && cell.row == endCell.row){
                 Cell* currentCell = &cell;
-                // while(currentCell != NULL){
-                //     std::cout << currentCell->row << " " << currentCell->column << std::endl;
-                //     grid_vector[currentCell->row][currentCell->column].type = Cell().PATH;
-                //     currentCell = currentCell->parent;
-                // }
-                grid_vector[cell.row][cell.column].type = Cell().PATH;
-                int p_r = grid_vector[cell.row][cell.column].parent->row;
-                int p_c = grid_vector[cell.row][cell.column].parent->column;
-                grid_vector[p_r][p_c].type = Cell().PATH;
+                int p_r = cell.row;
+                int p_c = cell.column;
+                while(grid_vector[start_cell.row][start_cell.column].type != Cell().PATH){
+                    grid_vector[p_r][p_c].type = Cell().PATH;
+                    int p_r_r = p_r;
+                    p_r = grid_vector[p_r][p_c].parent->row;
+                    p_c = grid_vector[p_r_r][p_c].parent->column;
+                }
             }
 
             this->queue.pop();
