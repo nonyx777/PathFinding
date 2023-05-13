@@ -52,6 +52,8 @@ void Engine::pollEvent(){
             case sf::Event::MouseButtonPressed:
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     this->pointLocation(this->mouse_position_view);
+                    if((this->startCell.column != -1 && this->startCell.row != -1) && (this->endCell.column != -1 && this->endCell.row != -1))
+                        this->dijkstra.findPath(startCell, endCell, this->grid_vector);
                 break;
             case sf::Event::MouseWheelScrolled:
                 if(this->event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel){
@@ -77,9 +79,6 @@ void Engine::update(){
 
     std::string cell_type_string = this->cell_type == 0 ? "Start Point" : "End Point";
     this->setText(cell_type_string);
-
-    if((this->startCell.column != -1 && this->startCell.row != -1) && (this->endCell.column != -1 && this->endCell.row != -1))
-        this->dijkstra.findPath(startCell, endCell, this->grid_vector);
 
     for(int i = 0; i < this->grid_vector.size(); i++){
         for(int j = 0; j < this->grid_vector[i].size(); j++){
