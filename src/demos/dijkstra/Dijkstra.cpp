@@ -30,11 +30,13 @@ void Dijkstra::findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>
 
             for(int i = cell.row-1; i <= cell.row+1; i++){
                 for(int j = cell.column-1; j <= cell.column+1; j++){
-                    if((j > 0 && i > 0) && (j < 19 && i < 19)){
-                        if(grid_vector[i][j].visited == false){
-                            this->queue.push(grid_vector[i][j]);
-                            grid_vector[i][j].parent = &grid_vector[cell.row][cell.column];//assigning parent
-                            grid_vector[i][j].visited = true;
+                    if((i == cell.row+1 && j == cell.column) || (i == cell.row-1 && j == cell.column) || (i == cell.row && j == cell.column+1) || (i == cell.row && j == cell.column-1)){
+                        if((j > 0 && i > 0) && (j < 19 && i < 19)){
+                            if(grid_vector[i][j].visited == false){
+                                this->queue.push(grid_vector[i][j]);
+                                grid_vector[i][j].parent = &grid_vector[cell.row][cell.column];//assigning parent
+                                grid_vector[i][j].visited = true;
+                            }
                         }
                     }
                 }
