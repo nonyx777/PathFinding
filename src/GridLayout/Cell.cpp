@@ -39,7 +39,9 @@ void Cell::setColor(){
             break;
         case Type::PATH:
             this->cell_property.setFillColor(path_color);
+            break;
         case Type::BLOCK:
             this->cell_property.setFillColor(block_color);
+            break;
     }
 }

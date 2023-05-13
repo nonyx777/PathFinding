@@ -58,7 +58,7 @@ void Engine::pollEvent(){
             case sf::Event::MouseWheelScrolled:
                 if(this->event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel){
                     if(this->event.mouseWheelScroll.delta > 0)
-                        if(this->cell_type < 1)
+                        if(this->cell_type < 2)
                             this->cell_type++;
                         else
                             this->cell_type = 0;
@@ -66,7 +66,7 @@ void Engine::pollEvent(){
                         if(this->cell_type > 0)
                             this->cell_type--;
                         else
-                            this->cell_type = 1;
+                            this->cell_type = 2;
                 }
                 break;
         }
@@ -77,7 +77,10 @@ void Engine::update(){
     this->mouse_position = sf::Mouse::getPosition(*this->window);
     this->mouse_position_view = this->window->mapPixelToCoords(this->mouse_position);
 
-    std::string cell_type_string = this->cell_type == 0 ? "Start Point" : "End Point";
+    std::string cell_type_string = this->cell_type == 0 ? "Start Point" : 
+    this->cell_type == 1 ? "End Point" : 
+    "Block";
+
     this->setText(cell_type_string);
 
     for(int i = 0; i < this->grid_vector.size(); i++){
@@ -118,11 +121,12 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
     int mouse_column = floor(mouse_position.x/this->size);
 
     this->grid_vector[mouse_row][mouse_column].type = this->cell_type == 0 ? 
-    Cell().START: Cell().END;
+    Cell().START: this->cell_type == 1 ? Cell().END : Cell().BLOCK;
 
+    //saving start and end cell for use in another function..
     if(this->cell_type == 0)
         this->startCell = this->grid_vector[mouse_row][mouse_column];
-    else
+    else if(this->cell_type == 1)
         this->endCell = this->grid_vector[mouse_row][mouse_column];
 
     //revert cell state and remove cell from previously selected container
@@ -133,10 +137,11 @@ void Engine::pointLocation(sf::Vector2f mouse_position){
         }
     }
 
-    //store selected cell
+    //store selected cell if only it's start and end cell
     this->prev_row = mouse_row;
     this->prev_column = mouse_column;
-    this->selected_cells.push_back(this->grid_vector[this->prev_row][this->prev_column]);
+    if(this->grid_vector[this->prev_row][this->prev_column].type != Cell().BLOCK)
+        this->selected_cells.push_back(this->grid_vector[this->prev_row][this->prev_column]);
 } 
 
 void Engine::setText(std::string particle_text){
