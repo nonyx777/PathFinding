@@ -9,6 +9,7 @@ const sf::Color end_color = sf::Color::Red;
 const sf::Color empty_color = sf::Color::Transparent;
 const sf::Color visited_color = sf::Color::Yellow;
 const sf::Color path_color = sf::Color::White;
+const sf::Color block_color = sf::Color(129, 97, 62, 255);
 
 class Cell{
     public:
@@ -20,7 +21,8 @@ class Cell{
             START,
             END,
             EMPTY,
-            PATH
+            PATH,
+            BLOCK
         };
     public:
         Cell();
