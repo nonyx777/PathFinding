@@ -12,10 +12,8 @@ void Engine::initVariables(){
     }
 
     //default values for start and end cell
-    this->startCell.column = -1;
-    this->startCell.row = -1;
-    this->endCell.column = -1;
-    this->endCell.row = -1;
+    this->startCell.column = this->startCell.row = -1;
+    this->endCell.column = this->endCell.row = -1;
 }
 void Engine::initWindow(){
     this->video_mode.width = 600;

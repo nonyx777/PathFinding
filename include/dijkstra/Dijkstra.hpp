@@ -9,6 +9,5 @@ class Dijkstra{
     public:
         Dijkstra();
     public:
-        void setupNeighbours(Cell& cell);
         void findPath(Cell& cell, Cell& endCell, std::vector<std::vector<Cell>>& grid_vector);
 };
